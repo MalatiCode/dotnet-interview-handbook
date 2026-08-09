@@ -69,14 +69,36 @@ dotnet-interview-handbook/
 ├── images/                 # Static images (logos, screenshots)
 ├── diagrams/               # ASCII + Mermaid source diagrams
 ├── code/                   # Runnable C# examples referenced in chapters
-└── build/                  # PDF build output (combined.md + handbook.pdf)
+├── build/                  # PDF build output (combined.md + handbook.pdf)
+├── build-pdf.sh            # Build script: combines chapters and exports the PDF
+└── pdf-style.css           # Print stylesheet used by the PDF build
 ```
 
-## How The PDF Is Produced
+## Building The PDF
 
-1. Chapters are authored as maintainable, version-controlled Markdown.
-2. A build script concatenates chapters in order into `build/combined.md`.
-3. `pandoc` (with a professional template) converts `combined.md` into a single professionally formatted PDF.
+Run the build script from the handbook root any time you add, rename, or update
+chapters:
+
+```bash
+./build-pdf.sh
+```
+
+The script:
+
+1. Concatenates `README.md` plus every `chapters/*.md` file (in order) into `build/combined.md`.
+2. Converts `build/combined.md` to a standalone HTML document with `pandoc`, inlining `pdf-style.css`.
+3. Converts the HTML to a professionally formatted A4 PDF at `build/handbook.pdf` with `wkhtmltopdf`.
+
+Requirements (Debian/Ubuntu):
+
+```bash
+apt-get install -y pandoc wkhtmltopdf
+```
+
+Notes:
+
+- Chapter files must keep the zero-padded naming convention (`01-…`, `02-…`, …, `42-…`) so they concatenate in the correct order.
+- `build/combined.md` and `build/handbook.pdf` are committed to the repository so the latest release is always available without rebuilding.
 
 ## Healthcare Context
 

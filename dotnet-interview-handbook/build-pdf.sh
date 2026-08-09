@@ -52,12 +52,24 @@ mkdir -p "$BUILD_DIR"
 echo "Wrote $COMBINED ($(wc -l < "$COMBINED") lines)."
 
 # ---- 4. Markdown -> standalone HTML -----------------------------------------
+# Wrap pdf-style.css in <style> and inline via --include-in-header so
+# pandoc's default narrow body (max-width: 36em) is overridden for
+# full-page-width content.
+HEADER_TMP="${TMPDIR:-/tmp}/handbook-header-$(date +%s).html"
+{
+    echo "<style>"
+    cat pdf-style.css
+    echo "</style>"
+} > "$HEADER_TMP"
+
 pandoc "$COMBINED" \
     -f markdown \
     -t html5 \
     -s \
     --metadata title="$BOOK_TITLE" \
+    --include-in-header="$HEADER_TMP" \
     -o "$HTML_TMP"
+rm -f "$HEADER_TMP"
 echo "Converted Markdown to HTML."
 
 # ---- 5. HTML -> PDF ----------------------------------------------------------

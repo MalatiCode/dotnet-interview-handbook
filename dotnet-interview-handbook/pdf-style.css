@@ -1,0 +1,22 @@
+/* PDF export stylesheet — overrides pandoc's default narrow body.
+   Inlined into the generated HTML by build-pdf.sh via --include-in-header. */
+
+body {
+    margin: 0 !important;
+    max-width: 100% !important;
+}
+
+/* Avoid clipping long code lines: wrap instead of overflowing the page. */
+pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+table {
+    word-wrap: break-word;
+}
+
+/* Slightly tighter tables so wide comparison tables fit the page. */
+th, td {
+    font-size: 0.9em;
+}

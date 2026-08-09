@@ -1,1 +1,4 @@
-build/
+# Ignore everything in build/ except the generated artifacts we track in git
+build/*
+!build/combined.md
+!build/handbook.pdf
