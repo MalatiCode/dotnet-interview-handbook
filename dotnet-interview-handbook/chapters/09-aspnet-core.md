@@ -1644,4 +1644,4 @@ CHOICE: controllers = rich resources, minimal APIs = glue/webhooks/health
 
 ---
 
-*Continue → Chapter 10: Authentication and Authorization*
+*Continue → Chapter 10: Middleware*
