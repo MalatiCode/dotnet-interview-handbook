@@ -1,11 +1,11 @@
-# Chapter 36: Polly (Resilience & Fault Handling)
+# Chapter 37: Polly (Resilience & Fault Handling)
 
 > **Audience:** Experienced .NET developers (5+ years) preparing for an L2 (Mid/Senior) interview at a Healthcare company.
 > **Scope:** Transient fault handling, Polly resilience strategies (retry, circuit breaker, timeout, bulkhead, rate limiter, fallback), `AddPolicyHandler` with `IHttpClientFactory`, `ResiliencePipeline` (Polly v8), exponential backoff with jitter, and healthcare use cases (resilient calls to FHIR, lab, and insurance services without cascading failures).
 
 ---
 
-## 36.1 Why Resilient Calls and What Polly Gives You
+## 37.1 Why Resilient Calls and What Polly Gives You
 
 ### Interview Answer (30–45 seconds)
 
@@ -40,7 +40,7 @@
 - Retry only idempotent/transient failures (network, 408, 429, 5xx), not 4xx.
 - Exponential backoff (`2^n` seconds) + jitter to avoid thundering herds.
 - Bound retries; combine with a circuit breaker and timeout.
-- Honor `Retry-After` when present (Ch. 33).
+- Honor `Retry-After` when present (Ch. 34).
 
 **Circuit breaker states:**
 
@@ -128,7 +128,7 @@ if (patient is null) return Results.StatusCode(503);   // degraded response
 ### Advantages
 
 - Handles transient failures transparently at the call site.
-- Circuit breaker prevents cascading failure (a core microservices pattern, Ch. 29).
+- Circuit breaker prevents cascading failure (a core microservices pattern, Ch. 30).
 - Centralized, per-dependency policy configuration.
 - Composability: retry + timeout + breaker + fallback together.
 - Standard integration with `IHttpClientFactory`.
@@ -138,7 +138,7 @@ if (patient is null) return Results.StatusCode(503);   // degraded response
 
 - Wrong configuration (retrying non-transient, unbounded retries) makes things worse.
 - Circuit breakers add latency complexity and need tuning.
-- Retrying non-idempotent POSTs can duplicate side effects (need idempotency, Ch. 30).
+- Retrying non-idempotent POSTs can duplicate side effects (need idempotency, Ch. 31).
 - Adds a layer to reason about; debugging policy behavior needs observability.
 - Version differences (v7 `Policy` vs v8 `ResiliencePipeline`) cause migration friction.
 
@@ -149,7 +149,7 @@ if (patient is null) return Results.StatusCode(503);   // degraded response
 - Bound retries and combine with timeout + circuit breaker.
 - Honor `Retry-After` on 429.
 - Use `AddStandardResilienceHandler` for HttpClients; tune per dependency.
-- Make writes idempotent so retried requests are safe (Ch. 30).
+- Make writes idempotent so retried requests are safe (Ch. 31).
 - Expose policy metrics (attempts, breaker state, failures).
 - Test policies with fault injection (e.g., a fake flaky handler).
 
@@ -158,7 +158,7 @@ if (patient is null) return Results.StatusCode(503);   // degraded response
 - Retrying every error including 4xx and permanent failures.
 - No jitter → thundering herd on the first retry wave.
 - Infinite/unbounded retries → requests hang and pile up.
-- Retrying non-idempotent POSTs → duplicate orders (Ch. 30).
+- Retrying non-idempotent POSTs → duplicate orders (Ch. 31).
 - Timeout set longer than the HTTP timeout → timeout never fires.
 - Circuit breaker sampling too small → trips on normal variance.
 - Not observing breaker/retry metrics → can't tune.
@@ -179,8 +179,8 @@ if (patient is null) return Results.StatusCode(503);   // degraded response
 ### Senior Level Talking Points
 
 - **Resilience design patterns:** retry + timeout + breaker + bulkhead + fallback compose into the "application resilience stack."
-- **Cascading failure prevention:** circuit breakers and bulkheads protect the whole system (Ch. 29).
-- **Idempotency as the enabler:** retries are only safe when writes are idempotent (Ch. 30).
+- **Cascading failure prevention:** circuit breakers and bulkheads protect the whole system (Ch. 30).
+- **Idempotency as the enabler:** retries are only safe when writes are idempotent (Ch. 31).
 - **Cost/queue behavior:** respect rate-limit headers; don't overwhelm a recovering partner.
 - **Observability:** per-strategy metrics (attempts, breaker trips, timeout counts) in dashboards.
 - **Trade-offs:** retries add latency; balance against SLOs.
@@ -207,7 +207,7 @@ graph LR
 | Timeout | Bound latency | Thread/connection exhaustion |
 | Bulkhead | Limit concurrency per dep | One dep starving the process |
 | Fallback | Degrade gracefully | Hard failure for the user |
-| Rate limiter | Client-side courtesy | Hammering a dep (Ch. 33) |
+| Rate limiter | Client-side courtesy | Hammering a dep (Ch. 34) |
 
 ### Memory Trick
 
@@ -241,10 +241,10 @@ Polly gives .NET resilient calls: retry, circuit breaker, timeout, bulkhead, fal
 - Polly strategies: retry, circuit breaker, timeout, bulkhead, fallback, rate limiter.
 - v8: `ResiliencePipeline`/`ResiliencePipelineBuilder` (replaces v7 `Policy`).
 - `IHttpClientFactory`: `AddStandardResilienceHandler` / `AddPolicyHandler`.
-- Retry transient + idempotent only; honor `Retry-After` (Ch. 33); use exponential backoff + jitter.
+- Retry transient + idempotent only; honor `Retry-After` (Ch. 34); use exponential backoff + jitter.
 - Circuit breaker: Closed → Open (fast-fail) → Half-open (probe).
 - Timeout bounds latency; bulkhead caps concurrency; fallback degrades gracefully.
-- Safe retries for writes require idempotency (Ch. 30).
+- Safe retries for writes require idempotency (Ch. 31).
 - Test with fault injection; expose strategy metrics.
 
 ## Things Interviewers Expect from 5+ Years Experience
@@ -290,10 +290,10 @@ await pipeline.ExecuteAsync(ct => call(ct));
 
 **Q:** What is a bulkhead? **A:** Caps concurrent calls to a dependency to isolate failure.
 
-**Q:** What's the safest way to retry a POST? **A:** Make it idempotent (Idempotency-Key, Ch. 30) so replays are harmless.
+**Q:** What's the safest way to retry a POST? **A:** Make it idempotent (Idempotency-Key, Ch. 31) so replays are harmless.
 
 **Q:** How do you honor a rate limiter? **A:** Retry after `Retry-After` header, with jitter.
 
 ---
 
-*Continue → Chapter 37: Security*
+*Continue → Chapter 38: Security*

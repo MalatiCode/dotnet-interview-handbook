@@ -1,11 +1,11 @@
-# Chapter 33: Rate Limiting
+# Chapter 34: Rate Limiting
 
 > **Audience:** Experienced .NET developers (5+ years) preparing for an L2 (Mid/Senior) interview at a Healthcare company.
 > **Scope:** Why rate limit (protect resources, fairness, cost, abuse), algorithms (fixed window, sliding window, token bucket, sliding window log, concurrency), ASP.NET Core built-in rate limiter middleware, distributed rate limiting (Redis), `429 Too Many Requests` + `Retry-After` headers, and healthcare considerations (partner API quotas, protecting clinical systems from overload).
 
 ---
 
-## 33.1 What Is Rate Limiting and Why Do It
+## 34.1 What Is Rate Limiting and Why Do It
 
 ### Interview Answer (30–45 seconds)
 
@@ -152,9 +152,9 @@ builder.Services.AddRateLimiter(options =>
 
 - Partition by the most specific stable identity: API key, client ID, or authenticated user (Ch. 11–12).
 - Choose the algorithm by shape: token bucket for smooth API quotas; fixed/sliding for simple windows; concurrency for expensive endpoints.
-- Always return `429` + `Retry-After`; document headers in OpenAPI (Ch. 32).
+- Always return `429` + `Retry-After`; document headers in OpenAPI (Ch. 33).
 - Use a distributed limiter (Redis) behind load balancers.
-- Exempt health checks (Ch. 34) and internal endpoints.
+- Exempt health checks (Ch. 35) and internal endpoints.
 - Monitor rejections, quota usage, and per-client patterns.
 - Tune limits with real traffic; make them generous enough to avoid false positives.
 
@@ -185,7 +185,7 @@ builder.Services.AddRateLimiter(options =>
 
 - **Multi-tier limits:** per-user + per-tenant + global to catch both hot users and systemic spikes.
 - **Fairness and cost:** partner plans, billing telemetry from rate-limit metadata.
-- **Backpressure to the whole stack:** rate limiting in the gateway (Ch. 29) plus per-service policies.
+- **Backpressure to the whole stack:** rate limiting in the gateway (Ch. 30) plus per-service policies.
 - **Distributed correctness:** Redis limiter consistency, partition-key cardinality, avoiding hotspot keys.
 - **Monitoring:** rejection rates, quota utilization, alerts on abuse patterns.
 - **Client SDK discipline:** built-in backoff honoring `Retry-After`.
@@ -300,4 +300,4 @@ app.MapGet("/x", ...).RequireRateLimiting("partner");
 
 ---
 
-*Continue → Chapter 34: Health Checks*
+*Continue → Chapter 35: Health Checks*

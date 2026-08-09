@@ -1,15 +1,15 @@
-# Chapter 38: Healthcare Best Practices
+# Chapter 39: Healthcare Best Practices
 
 > **Audience:** Experienced .NET developers (5+ years) preparing for an L2 (Mid/Senior) interview at a Healthcare company.
 > **Scope:** Healthcare domain fundamentals: PHI/PII and HIPAA (US), HL7 and FHIR (interoperability), terminologies (LOINC, SNOMED CT, RxNorm, ICD-10), regulated software concerns (audit trails, data integrity, availability), privacy-preserving design (data minimization, consent, masking), healthcare integration patterns (HL7 v2, FHIR REST), and engineering practices that matter in clinical systems — the "healthcare angle" across every chapter.
 
 ---
 
-## 38.1 What Makes Healthcare Software Different
+## 39.1 What Makes Healthcare Software Different
 
 ### Interview Answer (30–45 seconds)
 
-> "Healthcare software deals with protected health information, so privacy, security, correctness, and auditability are non-negotiable. In the US, HIPAA sets requirements: encrypt data at rest and in transit, enforce access controls, log access to PHI, and minimize the data you collect. Interoperability is driven by standards — FHIR (REST-based resources like Patient, Observation, MedicationOrder) and HL7 v2 for legacy interfaces — and by clinical terminologies like LOINC, SNOMED CT, RxNorm, and ICD-10 so data is machine-readable and comparable. And because lives are at stake, clinical data must be correct, available, and auditable: no silent data loss, strong availability (Ch. 19, 34), and a complete audit trail. As a developer I apply these as engineering practices: PHI-safe logging (Ch. 35), tenant/consent-aware access (Ch. 11), idempotent clinical writes (Ch. 30), and standards-based data modeling."
+> "Healthcare software deals with protected health information, so privacy, security, correctness, and auditability are non-negotiable. In the US, HIPAA sets requirements: encrypt data at rest and in transit, enforce access controls, log access to PHI, and minimize the data you collect. Interoperability is driven by standards — FHIR (REST-based resources like Patient, Observation, MedicationOrder) and HL7 v2 for legacy interfaces — and by clinical terminologies like LOINC, SNOMED CT, RxNorm, and ICD-10 so data is machine-readable and comparable. And because lives are at stake, clinical data must be correct, available, and auditable: no silent data loss, strong availability (Ch. 19, 34), and a complete audit trail. As a developer I apply these as engineering practices: PHI-safe logging (Ch. 36), tenant/consent-aware access (Ch. 11), idempotent clinical writes (Ch. 31), and standards-based data modeling."
 
 ### Detailed Explanation
 
@@ -40,7 +40,7 @@
 
 **Regulated software concerns:**
 
-- **Audit trails** — who accessed what/when; tamper-evident logs (Ch. 35).
+- **Audit trails** — who accessed what/when; tamper-evident logs (Ch. 36).
 - **Data integrity** — no silent corruption; transactions, versioning, validation.
 - **Availability** — clinical systems must be up; redundancy, health checks, failover (Ch. 19, 34).
 - **Traceability** — each record has provenance (who/when/system).
@@ -60,7 +60,7 @@
 
 ### Real World Example (Healthcare)
 
-A lab results system ingests HL7 v2 ORU messages from a legacy interface, translates them into FHIR `Observation` resources (mapping LOINC codes), and stores them. The API exposes FHIR search (`GET /Observation?patient=...&code=2339-0`). Access is role-based and consent-aware: a clinician can read observations only for patients in their care context. Every read of a patient resource is audit-logged with a hashed patient ID. The system is deployed as a Kubernetes Deployment with health checks (Ch. 34), and all PHI is encrypted at rest and in transit.
+A lab results system ingests HL7 v2 ORU messages from a legacy interface, translates them into FHIR `Observation` resources (mapping LOINC codes), and stores them. The API exposes FHIR search (`GET /Observation?patient=...&code=2339-0`). Access is role-based and consent-aware: a clinician can read observations only for patients in their care context. Every read of a patient resource is audit-logged with a hashed patient ID. The system is deployed as a Kubernetes Deployment with health checks (Ch. 35), and all PHI is encrypted at rest and in transit.
 
 ### Production Code Example
 
@@ -153,22 +153,22 @@ public sealed class ObservationIngestService
 - Model PHI boundaries explicitly: tenant, consent, role.
 - Adopt FHIR as the canonical model where possible; translate legacy formats.
 - Use standard terminologies (LOINC, SNOMED, RxNorm, ICD-10) for codes.
-- Log audits without raw PHI; hash identifiers (Ch. 35).
-- Make clinical writes idempotent with provenance (Ch. 30).
-- Encrypt PHI at rest and in transit; enforce TLS (Ch. 37).
+- Log audits without raw PHI; hash identifiers (Ch. 36).
+- Make clinical writes idempotent with provenance (Ch. 31).
+- Encrypt PHI at rest and in transit; enforce TLS (Ch. 38).
 - Design for availability: health checks, redundancy, graceful degradation (Ch. 19, 34).
 - Keep data minimization: don't store what you don't need.
 - Maintain traceability: every record has who/when/system.
 
 ### Common Mistakes
 
-- Logging raw PHI/MRN in errors and logs (Ch. 35, 37).
+- Logging raw PHI/MRN in errors and logs (Ch. 36, 37).
 - Ignoring consent in data access — assume it's checked in the UI only.
 - Storing clinical codes as free text instead of standard terminologies.
 - Non-idempotent ingest → duplicates from retried messages (Ch. 21).
 - No audit trail for sensitive reads.
 - Treating healthcare like ordinary CRUD (availability/integrity slack).
-- Using shared databases/tenants without isolation (Ch. 29).
+- Using shared databases/tenants without isolation (Ch. 30).
 
 ### Interview Follow-up Questions
 
@@ -179,7 +179,7 @@ public sealed class ObservationIngestService
 5. **"How do you make clinical writes safe on retry?"** — Idempotency keys + provenance; dedupe by external message ID.
 6. **"How do you audit PHI access?"** — Transactional audit logs with hashed IDs; who/when/what; no raw PHI.
 7. **"How do you enforce consent?"** — Model consent as data; check in access logic (not just UI) with role + tenant + consent.
-8. **"How do you protect PHI in transit and at rest?"** — TLS everywhere; encryption at rest; Key Vault for secrets (Ch. 37).
+8. **"How do you protect PHI in transit and at rest?"** — TLS everywhere; encryption at rest; Key Vault for secrets (Ch. 38).
 9. **"How do you handle legacy HL7 interfaces?"** — Adapter services translate to FHIR internally; brokers for async (Ch. 21–22).
 10. **"What engineering practices differ in healthcare?"** — Auditability, idempotency, availability, data integrity, PHI-safe logging.
 
@@ -300,4 +300,4 @@ Practices:
 
 ---
 
-*Continue → Chapter 39: Common Interview Coding Problems*
+*Continue → Chapter 40: Common Interview Coding Problems*

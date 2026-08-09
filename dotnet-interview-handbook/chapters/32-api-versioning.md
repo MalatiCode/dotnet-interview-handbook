@@ -1,11 +1,11 @@
-# Chapter 31: API Versioning
+# Chapter 32: API Versioning
 
 > **Audience:** Experienced .NET developers (5+ years) preparing for an L2 (Mid/Senior) interview at a Healthcare company.
 > **Scope:** Why version an API, versioning strategies (URL path, query string, header, media type), `Asp.Versioning.Http`/`Asp.Versioning.Mvc` in ASP.NET Core, backward compatibility, additive vs breaking changes, deprecation lifecycle, and healthcare considerations (stable contracts for EHR integrations, regulated consumers, migration windows).
 
 ---
 
-## 31.1 Why Version and How to Choose a Strategy
+## 32.1 Why Version and How to Choose a Strategy
 
 ### Interview Answer (30–45 seconds)
 
@@ -288,4 +288,4 @@ builder.Services.AddApiVersioning(o =>
 
 ---
 
-*Continue → Chapter 32: Swagger / OpenAPI*
+*Continue → Chapter 33: Swagger / OpenAPI*

@@ -1,11 +1,11 @@
-# Chapter 30: API Design
+# Chapter 31: API Design
 
 > **Audience:** Experienced .NET developers (5+ years) preparing for an L2 (Mid/Senior) interview at a Healthcare company.
-> **Scope:** REST principles, resource modeling and naming, HTTP methods and status codes, request/response design, filtering/paging/sorting, error handling and problem details, versioning strategies (Ch. 31), idempotency, validation, security basics, OpenAPI documentation (Ch. 32), and healthcare-specific API concerns (FHIR, PHI, pagination of large clinical data, auditability).
+> **Scope:** REST principles, resource modeling and naming, HTTP methods and status codes, request/response design, filtering/paging/sorting, error handling and problem details, versioning strategies (Ch. 32), idempotency, validation, security basics, OpenAPI documentation (Ch. 33), and healthcare-specific API concerns (FHIR, PHI, pagination of large clinical data, auditability).
 
 ---
 
-## 30.1 What Makes a Well-Designed REST API
+## 31.1 What Makes a Well-Designed REST API
 
 ### Interview Answer (30–45 seconds)
 
@@ -55,13 +55,13 @@
 - `PUT`/`DELETE` are naturally idempotent (same effect on repeat).
 - `POST` (create) is not — use an `Idempotency-Key` header or a client-supplied ID for safe retries.
 
-**Versioning:** covered in Ch. 31 (URI, query, header, media type).
+**Versioning:** covered in Ch. 32 (URI, query, header, media type).
 
 **Security basics:**
 
 - AuthN/AuthZ (Ch. 11–12): OAuth2/JWT, scopes.
 - HTTPS always; TLS for PHI in transit.
-- Rate limiting (Ch. 33), input validation, CORS policies.
+- Rate limiting (Ch. 34), input validation, CORS policies.
 
 ### Real World Example (Healthcare)
 
@@ -151,7 +151,7 @@ app.UseExceptionHandler(handler => handler.Run(async ctx =>
 - Chatty — sometimes needs multiple calls (mitigate with links/aggregation).
 - Over-fetching/under-fetching without field selection (or GraphQL).
 - Inconsistency risk across teams without a shared API guideline.
-- Versioning (Ch. 31) adds long-term maintenance.
+- Versioning (Ch. 32) adds long-term maintenance.
 
 ### Best Practices
 
@@ -161,7 +161,7 @@ app.UseExceptionHandler(handler => handler.Run(async ctx =>
 - Paginate with cursors for large clinical datasets; bound `pageSize`.
 - Support filtering/sorting via query parameters with whitelisted fields.
 - Use `Idempotency-Key` for creates; rely on `PUT`/`DELETE` idempotency.
-- Version deliberately (Ch. 31); document with OpenAPI (Ch. 32).
+- Version deliberately (Ch. 32); document with OpenAPI (Ch. 33).
 - Secure: HTTPS, JWT/scopes, validation, rate limiting, CORS (Ch. 11–12, 33).
 - Return DTOs, not entities; don't expose internal identifiers or PHI fields unnecessarily.
 - Audit access to sensitive endpoints (who/when/what).
@@ -186,14 +186,14 @@ app.UseExceptionHandler(handler => handler.Run(async ctx =>
 5. **"How do you make POST idempotent?"** — `Idempotency-Key` header or client-supplied `Id`; dedupe server-side and return the original result.
 6. **"What is `ProblemDetails`?"** — RFC 7807 structured error format: type/title/status/detail/instance/extensions.
 7. **"How do you handle large clinical datasets?"** — Cursor paging, filtering, projections, and read-model optimization.
-8. **"How do you version an API?"** — Ch. 31: URL (`/v1`), query (`?api-version=1`), header, or media type; pick based on change policy.
+8. **"How do you version an API?"** — Ch. 32: URL (`/v1`), query (`?api-version=1`), header, or media type; pick based on change policy.
 9. **"ETag/conditional requests?"** — `If-None-Match` → `304 Not Modified`; reduces payloads and supports optimistic concurrency.
 10. **"HATEOAS — do you use it?"** — Rarely in practice; links in responses can help discovery but add complexity.
 
 ### Senior Level Talking Points
 
 - **API contracts as products:** OpenAPI + consumer-driven contract tests; breaking changes gated by a compatibility policy.
-- **Domain-driven resources:** model APIs after bounded contexts (Ch. 29), not DB tables.
+- **Domain-driven resources:** model APIs after bounded contexts (Ch. 30), not DB tables.
 - **Reliability semantics:** idempotency keys, retries with `Retry-After`, rate-limit headers.
 - **Healthcare specifics:** FHIR compliance where relevant, PHI redaction in logs, audit logging of sensitive reads, pagination of large result sets.
 - **Performance:** DTO projections, response caching, conditional requests, and monitoring P95 latency.
@@ -262,7 +262,7 @@ Good API design is resource modeling + consistent conventions: plural noun URLs,
 - Filtering/sorting via query params; cursor paging for large sets; bound `pageSize`.
 - Idempotency: `PUT`/`DELETE` inherent; `POST` needs an `Idempotency-Key`.
 - Return DTOs, not entities; no stack traces; validation server-side.
-- Version (Ch. 31), document with OpenAPI (Ch. 32), secure (Ch. 11–12, 33).
+- Version (Ch. 32), document with OpenAPI (Ch. 33), secure (Ch. 11–12, 33).
 - Healthcare: FHIR conventions, PHI-safe logging, audit sensitive reads.
 
 ## Things Interviewers Expect from 5+ Years Experience
@@ -305,4 +305,4 @@ Filtering: ?loinc=2339-0&status=active
 
 ---
 
-*Continue → Chapter 31: API Versioning*
+*Continue → Chapter 32: API Versioning*

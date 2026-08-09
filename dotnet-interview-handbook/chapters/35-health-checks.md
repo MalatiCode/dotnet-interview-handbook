@@ -1,11 +1,11 @@
-# Chapter 34: Health Checks
+# Chapter 35: Health Checks
 
 > **Audience:** Experienced .NET developers (5+ years) preparing for an L2 (Mid/Senior) interview at a Healthcare company.
 > **Scope:** Why health checks matter (orchestrators, load balancers, monitoring), liveness vs readiness, `Microsoft.Extensions.Diagnostics.HealthChecks` built-in checks (DB, HTTP, URLs, custom), health check responses and status aggregation, publishing health data (EventSource / Prometheus), and healthcare use cases (DB connectivity, downstream FHIR services, cache health) with readiness wiring in Kubernetes (Ch. 19).
 
 ---
 
-## 34.1 What Are Health Checks and Why Do They Matter
+## 35.1 What Are Health Checks and Why Do They Matter
 
 ### Interview Answer (30–45 seconds)
 
@@ -299,4 +299,4 @@ public sealed class RedisHealthCheck : IHealthCheck
 
 ---
 
-*Continue → Chapter 35: Serilog*
+*Continue → Chapter 36: Serilog*

@@ -1,11 +1,11 @@
-# Chapter 37: Security
+# Chapter 38: Security
 
 > **Audience:** Experienced .NET developers (5+ years) preparing for an L2 (Mid/Senior) interview at a Healthcare company.
 > **Scope:** Web application security fundamentals: OWASP Top 10, authentication/authorization (Ch. 11–12), input validation, SQL injection, XSS, CSRF, secrets management, HTTPS/TLS, data protection (at rest and in transit), logging PHI safely, security headers, and healthcare compliance (HIPAA, PHI/PII protection, least privilege, audit).
 
 ---
 
-## 37.1 What Does a Secure ASP.NET Core App Look Like
+## 38.1 What Does a Secure ASP.NET Core App Look Like
 
 ### Interview Answer (30–45 seconds)
 
@@ -25,7 +25,7 @@
 | Vulnerable Components | Keep packages patched; `dotnet list package --vulnerable` |
 | Auth/ID Failures | ASP.NET Core Identity, password policies, lockout (Ch. 11–12) |
 | Integrity Failures | Signed payloads (JWS), data integrity checks |
-| Logging Failures | Audit logs without PHI, monitor anomalies (Ch. 35) |
+| Logging Failures | Audit logs without PHI, monitor anomalies (Ch. 36) |
 | SSRF | Validate outbound URLs, deny internal redirects |
 
 **Key areas in depth:**
@@ -39,12 +39,12 @@
 - **Secrets management** — `appsettings.Development.json` (dev only), environment variables, Azure Key Vault; never commit secrets (Ch. 5, 38).
 - **Data protection** — Encryption at rest for sensitive fields, at transit via TLS.
 - **Security headers** — `X-Content-Type-Options`, `X-Frame-Options`, `Content-Security-Policy`, `Referrer-Policy`, HSTS.
-- **Rate limiting** — Ch. 33 for brute-force/DoS.
+- **Rate limiting** — Ch. 34 for brute-force/DoS.
 
 **Healthcare specifics (HIPAA):**
 
 - PHI/PII: minimize, encrypt, restrict, audit.
-- Audit logs: who accessed what, when (Ch. 35).
+- Audit logs: who accessed what, when (Ch. 36).
 - Least privilege + role-based access for clinical data.
 - No PHI in logs, URLs, or error messages.
 - Data retention and disposal policies.
@@ -110,7 +110,7 @@ var conn = builder.Configuration.GetConnectionString("ClinicalDb");  // from vau
 
 - Middleware pipeline: HTTPS redirect, security headers, authn, authz, antiforgery, rate limiting.
 - The auth middleware resolves the principal; authz middleware checks policies per endpoint.
-- Model validation runs during binding; invalid requests return 400/422 (Ch. 30).
+- Model validation runs during binding; invalid requests return 400/422 (Ch. 31).
 - Data protection keys encrypt cookies/tokens at rest.
 - EF Core parameterizes values so SQL injection is structurally prevented.
 
@@ -132,15 +132,15 @@ var conn = builder.Configuration.GetConnectionString("ClinicalDb");  // from vau
 ### Best Practices
 
 - Enforce authz per endpoint with scopes/policies (least privilege).
-- Validate all inputs server-side; reject unknown fields (Ch. 30).
+- Validate all inputs server-side; reject unknown fields (Ch. 31).
 - Parameterize all SQL; never concatenate user input.
 - Set security headers globally; force HTTPS + HSTS.
 - Store secrets in config/Key Vault; never commit them.
 - Encrypt PHI at rest and in transit; use modern ciphers.
-- Log audit events without PHI; monitor for anomalies (Ch. 35).
+- Log audit events without PHI; monitor for anomalies (Ch. 36).
 - Keep dependencies patched (`dotnet list package --vulnerable`).
 - Use Data Protection for cookies/tokens; validate JWT issuer/audience (Ch. 12).
-- Rate limit auth endpoints (Ch. 33); add account lockout.
+- Rate limit auth endpoints (Ch. 34); add account lockout.
 
 ### Common Mistakes
 
@@ -203,8 +203,8 @@ graph LR
 | HTTPS/HSTS | Eavesdropping | `UseHttpsRedirection`, `UseHsts` |
 | Secrets mgmt | Credential leak | Config/Key Vault |
 | Data protection | Token/cookie theft | `AddDataProtection` |
-| Rate limiting | Brute force/DoS | Ch. 33 |
-| PHI-safe logging | Data breach | Structured hashed logs (Ch. 35) |
+| Rate limiting | Brute force/DoS | Ch. 34 |
+| PHI-safe logging | Data breach | Structured hashed logs (Ch. 36) |
 
 ### Memory Trick
 
@@ -292,4 +292,4 @@ builder.Configuration.AddAzureKeyVault(new Uri(vaultUri), new DefaultAzureCreden
 
 ---
 
-*Continue → Chapter 38: Healthcare Best Practices*
+*Continue → Chapter 39: Healthcare Best Practices*

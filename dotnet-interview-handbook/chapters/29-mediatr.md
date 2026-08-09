@@ -1,11 +1,11 @@
-# Chapter 28: MediatR / CQRS
+# Chapter 29: MediatR / CQRS
 
 > **Audience:** Experienced .NET developers (5+ years) preparing for an L2 (Mid/Senior) interview at a Healthcare company.
 > **Scope:** CQRS (Command Query Responsibility Segregation) principles, MediatR as the in-process mediator (requests, handlers, pipelines, notifications), separating commands from queries, when CQRS is worth it (separate read/write models, scaling reads), pipeline behaviors (validation, logging, transactions), and healthcare examples — clinical write commands vs read projections.
 
 ---
 
-## 28.1 What Is CQRS and How Does MediatR Implement It
+## 29.1 What Is CQRS and How Does MediatR Implement It
 
 ### Interview Answer (30–45 seconds)
 
@@ -303,4 +303,4 @@ await _publisher.Publish(new OrderCreated(id));          // many handlers
 
 ---
 
-*Continue → Chapter 29: Microservices*
+*Continue → Chapter 30: Microservices*

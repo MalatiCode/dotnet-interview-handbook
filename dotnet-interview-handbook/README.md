@@ -97,8 +97,7 @@ All enterprise examples in this book draw from real healthcare systems:
 Each chapter is released one at a time. Type **"Continue"** to receive the next chapter.
 
 - [x] Structure & README
-- [ ] Chapter 1 – C# Fundamentals
-- [ ] Chapters 2–42 (released on "Continue")
+- [x] Chapters 1–42 (complete)
 
 ---
 

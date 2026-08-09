@@ -1,11 +1,11 @@
-# Chapter 35: Serilog
+# Chapter 36: Serilog
 
 > **Audience:** Experienced .NET developers (5+ years) preparing for an L2 (Mid/Senior) interview at a Healthcare company.
 > **Scope:** Structured logging vs plain text, Serilog fundamentals (sinks, enrichers, log levels), config via code and `appsettings.json`, logging scopes and correlation, sensitive data (PHI) protection, filtering, and integration with OpenTelemetry/other sinks (Console, File, Seq, Elasticsearch, Application Insights) — the healthcare angle being searchable, PHI-safe, correlatable logs.
 
 ---
 
-## 35.1 What Is Structured Logging and Why Serilog
+## 36.1 What Is Structured Logging and Why Serilog
 
 ### Interview Answer (30–45 seconds)
 
@@ -39,7 +39,7 @@
 
 **PHI/security concerns:**
 
-- Never log PHI by default (Ch. 38).
+- Never log PHI by default (Ch. 39).
 - Use enrichers to add a masked or pseudonymous PatientId only when permitted.
 - Sinks may carry data to external systems — enforce redaction/filtering.
 
@@ -127,7 +127,7 @@ app.MapPost("/orders", async (CreateOrderRequest req, IOrderService svc, ILogger
 ### Best Practices
 
 - Use message templates with named properties — never string interpolation for queryable fields.
-- Structure from day one; define a logging policy for PHI (Ch. 38).
+- Structure from day one; define a logging policy for PHI (Ch. 39).
 - Enrich every event with TraceId, environment, app version, machine.
 - Scope per-request context via `LogContext`/`ILogger.BeginScope`.
 - Choose sinks by environment (Console in dev, Seq/ES/AppInsights in prod).
@@ -275,4 +275,4 @@ log.LogError(ex, "Failed to place order {OrderId}", id);
 
 ---
 
-*Continue → Chapter 36: Polly*
+*Continue → Chapter 37: Polly*

@@ -1,11 +1,11 @@
-# Chapter 32: Swagger / OpenAPI
+# Chapter 33: Swagger / OpenAPI
 
 > **Audience:** Experienced .NET developers (5+ years) preparing for an L2 (Mid/Senior) interview at a Healthcare company.
 > **Scope:** OpenAPI specification and Swagger tools, `Swashbuckle`/`Microsoft.AspNetCore.OpenApi` integration in ASP.NET Core, JSON Schema-based request/response docs, XML comments enrichment, security schemes (JWT), per-version documents, generating clients, contract testing, and healthcare value (FHIR-style self-describing contracts, partner onboarding).
 
 ---
 
-## 32.1 What Are OpenAPI and Swagger
+## 33.1 What Are OpenAPI and Swagger
 
 ### Interview Answer (30–45 seconds)
 
@@ -39,7 +39,7 @@
 
 - Self-documenting contracts → less drift between code and docs.
 - Client SDK generation → fast partner onboarding.
-- Contract tests → catch breaking changes (with Ch. 31).
+- Contract tests → catch breaking changes (with Ch. 32).
 - Interactive debugging for developers.
 
 **Security schemes:**
@@ -48,7 +48,7 @@
 
 ### Real World Example (Healthcare)
 
-A FHIR-adjacent API is documented with OpenAPI. Partners open Swagger UI, click "Authorize", paste their JWT, and try `GET /patients/{id}` with example payloads. The doc shows required fields, error `ProblemDetails` schemas, and the auth scopes. CI runs a contract test that diffs the generated OpenAPI against the previous release, so a breaking change (Ch. 31) is caught before it ships — protecting the EHR integrations that consume the API.
+A FHIR-adjacent API is documented with OpenAPI. Partners open Swagger UI, click "Authorize", paste their JWT, and try `GET /patients/{id}` with example payloads. The doc shows required fields, error `ProblemDetails` schemas, and the auth scopes. CI runs a contract test that diffs the generated OpenAPI against the previous release, so a breaking change (Ch. 32) is caught before it ships — protecting the EHR integrations that consume the API.
 
 ### Production Code Example
 
@@ -138,14 +138,14 @@ app.MapOpenApi();   // serves /openapi/v1.json
 - Live, accurate API documentation — code and docs stay in sync.
 - Interactive testing in the browser (auth included).
 - Client code generation for many languages.
-- Contract tests against a machine-readable spec (Ch. 31).
+- Contract tests against a machine-readable spec (Ch. 32).
 - Self-describing onboarding for healthcare partners.
 - Standard: tools across the ecosystem understand OpenAPI.
 
 ### Disadvantages
 
 - Only as good as the metadata — weak types/attributes give weak docs.
-- Can leak internal details if DTOs are shared with entities (Ch. 30).
+- Can leak internal details if DTOs are shared with entities (Ch. 31).
 - Extra middleware overhead in dev; disable/limit in production.
 - Requires discipline to keep XML comments and annotations current.
 - Codegen clients can be over/under-featured vs hand-written.
@@ -157,7 +157,7 @@ app.MapOpenApi();   // serves /openapi/v1.json
 - Document security schemes (JWT bearer, OAuth scopes).
 - Keep DTOs separate from entities so schemas stay clean.
 - Enable docs in dev/staging; optionally expose a protected copy in prod.
-- Version documents per API version (Ch. 31).
+- Version documents per API version (Ch. 32).
 - Add contract tests that diff the generated spec across releases.
 - Use `WithSummary`/`WithDescription` and consistent naming.
 
@@ -188,7 +188,7 @@ app.MapOpenApi();   // serves /openapi/v1.json
 
 - **Contract-as-product:** OpenAPI is the single source of truth for consumers; codegen + contract tests in CI.
 - **FHIR angle:** FHIR uses its own definitions, but a companion OpenAPI doc for custom operations improves developer experience.
-- **Versioned docs** with a migration policy (Ch. 31).
+- **Versioned docs** with a migration policy (Ch. 32).
 - **Spec hygiene:** schema linting, naming conventions, and diffing in PRs.
 - **Security:** scopes and bearer schemes documented; secrets never appear in examples.
 
@@ -250,7 +250,7 @@ OpenAPI makes your API self-describing; Swagger renders it interactively. Know t
 - Schemas come from C# types via reflection + endpoint metadata.
 - Enrich with XML comments, `WithOpenApi`, `Produces`, `ProducesProblem`.
 - Document JWT via `AddSecurityDefinition`/`AddSecurityRequirement`.
-- Per-version docs via ApiExplorer group names (Ch. 31).
+- Per-version docs via ApiExplorer group names (Ch. 32).
 - Contract tests: generate + diff the spec in CI.
 - Keep Swagger in dev/staging or behind auth; DTOs separate from entities.
 - Clients: Swagger Codegen / OpenAPI Generator / NSwag.
@@ -259,7 +259,7 @@ OpenAPI makes your API self-describing; Swagger renders it interactively. Know t
 
 - You treat the OpenAPI document as a governed contract, not a dev convenience.
 - You document security, errors, and versions precisely.
-- You use CI contract diffs to prevent breaking changes (Ch. 31).
+- You use CI contract diffs to prevent breaking changes (Ch. 32).
 - You keep internal details out of the schema.
 - You decide when to generate clients vs hand-write them.
 
@@ -294,7 +294,7 @@ app.MapOpenApi();   // /openapi/v1.json
 
 **Q:** How do you add JWT to Swagger UI? **A:** `AddSecurityDefinition` + `AddSecurityRequirement`.
 
-**Q:** Why version documents? **A:** Each API version (Ch. 31) needs its own spec for consumers.
+**Q:** Why version documents? **A:** Each API version (Ch. 32) needs its own spec for consumers.
 
 **Q:** How do you catch breaking changes? **A:** Diff the generated OpenAPI in CI against the last release.
 
@@ -302,4 +302,4 @@ app.MapOpenApi();   // /openapi/v1.json
 
 ---
 
-*Continue → Chapter 33: Rate Limiting*
+*Continue → Chapter 34: Rate Limiting*

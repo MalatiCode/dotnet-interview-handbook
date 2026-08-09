@@ -1,11 +1,11 @@
-# Chapter 29: Microservices
+# Chapter 30: Microservices
 
 > **Audience:** Experienced .NET developers (5+ years) preparing for an L2 (Mid/Senior) interview at a Healthcare company.
-> **Scope:** Microservices fundamentals (bounded contexts, independent deployability, decentralized data), how to decompose a domain, service-to-service communication (sync vs async, Ch. 21–24), data consistency (sagas, outbox, Ch. 28), resilience patterns (circuit breaker, retries, Ch. 36), service discovery, API gateway, observability, monolith vs microservices trade-offs, and healthcare considerations (PHI boundaries, compliance).
+> **Scope:** Microservices fundamentals (bounded contexts, independent deployability, decentralized data), how to decompose a domain, service-to-service communication (sync vs async, Ch. 21–24), data consistency (sagas, outbox, Ch. 29), resilience patterns (circuit breaker, retries, Ch. 37), service discovery, API gateway, observability, monolith vs microservices trade-offs, and healthcare considerations (PHI boundaries, compliance).
 
 ---
 
-## 29.1 What Are Microservices and When Do You Need Them
+## 30.1 What Are Microservices and When Do You Need Them
 
 ### Interview Answer (30–45 seconds)
 
@@ -74,7 +74,7 @@ public sealed class OrderPlacedHandler : INotificationHandler<OrderPlaced>
 ```
 
 ```csharp
-// Synchronous fallback — resilience wrapper (see also Ch. 36)
+// Synchronous fallback — resilience wrapper (see also Ch. 37)
 public sealed class PatientLookupClient
 {
     private readonly HttpClient _http;
@@ -100,14 +100,14 @@ builder.Services.AddOpenTelemetry()
                        .AddHttpClientInstrumentation()
                        .AddOtlpExporter());
 
-builder.Services.AddHealthChecks()   // Ch. 34
+builder.Services.AddHealthChecks()   // Ch. 35
     .AddDbContextCheck<OrdersDbContext>();
 ```
 
 **Key lines explained:**
 
 - Cross-service side effects go through an outbox + broker (reliable, decoupled).
-- Synchronous calls are wrapped with retry/circuit-breaker resilience (Ch. 36).
+- Synchronous calls are wrapped with retry/circuit-breaker resilience (Ch. 37).
 - Every service exposes health checks and OpenTelemetry traces for observability.
 
 ### Internal Working
@@ -251,7 +251,7 @@ Microservices are independently deployable services owning their bounded context
 - Consistency: outbox for publishing, sagas with compensation, eventual consistency, reconciliation.
 - Avoid the distributed monolith: shared DB, co-deploy, chatty sync calls.
 - API gateway = edge concerns; service discovery = finding services (DNS/Kubernetes).
-- Resilience: retries, circuit breakers, bulkheads (Ch. 36).
+- Resilience: retries, circuit breakers, bulkheads (Ch. 37).
 - Observability: OpenTelemetry traces, structured logs, metrics, health checks.
 - Start modular monolith; split proven boundaries (strangler fig).
 - Healthcare: PHI boundaries, explicit data contracts, per-service security.
@@ -299,4 +299,4 @@ Golden rules:
 
 ---
 
-*Continue → Chapter 30: API Design*
+*Continue → Chapter 31: API Design*

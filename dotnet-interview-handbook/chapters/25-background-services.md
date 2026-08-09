@@ -190,7 +190,7 @@ builder.Services.AddHostedService<NotificationQueueService>();
 - **Distributed scheduling:** lease-based single-runner guarantees + idempotency as the belt-and-suspenders for clinical jobs.
 - **Durability vs in-process:** `Channel<T>` for transient work, broker-backed jobs (RabbitMQ/Kafka) for reliable delivery, Hangfire/Quartz for cron persistence.
 - **Graceful shutdown design:** bounded drain, checkpoint progress, resume semantics.
-- **Health integration:** expose worker status (last run, queue depth) via health checks (Ch. 34) and metrics.
+- **Health integration:** expose worker status (last run, queue depth) via health checks (Ch. 35) and metrics.
 - **Backpressure:** bounded channels, concurrency limits, and DB write batching for bulk clinical data.
 - **Observability:** structured logs with job IDs, metrics per job, alerting on failure/starvation.
 

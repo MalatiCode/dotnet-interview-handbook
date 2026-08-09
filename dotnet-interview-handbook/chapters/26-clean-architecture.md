@@ -173,7 +173,7 @@ builder.Services.AddScoped<PlaceMedicationOrderUseCase>();
 
 - **Enforcing the architecture:** project references + architecture tests (NetArchTest) to fail CI when dependencies leak.
 - **Domain modeling depth:** rich domain with invariants vs anemic CRUD — the difference shows in regulated healthcare code.
-- **CQRS/MediatR fit (Ch. 28):** use cases as commands/queries sit naturally in the Application layer.
+- **CQRS/MediatR fit (Ch. 29):** use cases as commands/queries sit naturally in the Application layer.
 - **Testing strategy:** unit-test the domain/use cases, integration-test infrastructure, contract-test boundaries.
 - **Migration path:** refactor legacy N-tier incrementally — wrap legacy behind Application interfaces first.
 - **Team scaling:** ownership by layer or by feature slice; consistency of naming across solutions.
@@ -282,4 +282,4 @@ Rules:
 
 ---
 
-*Continue → Chapter 27: Repository & Unit of Work*
+*Continue → Chapter 27: Repository Pattern*
